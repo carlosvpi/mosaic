@@ -1,0 +1,14 @@
+{
+  "name": "@carlosvpi/mosaic",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "version": "0.0.0",
+  "description": "MVC for the front end",
+  "repository": "https://github.com/carlosvpi/mosaic.git",
+  "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
