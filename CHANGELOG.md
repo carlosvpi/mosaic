@@ -1,3 +1,7 @@
+### 0.0.3
+
+* Removed error lines from browser/mosaic.js and browser/mosaic.min.js
+
 ### 0.0.2
 
 * Fixed package.json to include all folders.

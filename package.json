@@ -13,7 +13,7 @@
     "browser:min": "yarn minify browser/mosaic.js > browser/mosaic.min.js",
     "browser:clean": "sed -i '' '1,2d;$d' browser/mosaic.min.js"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MVC for the front end",
   "repository": "https://github.com/carlosvpi/mosaic.git",
   "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
