@@ -1,3 +1,7 @@
+### 0.0.5
+
+* Export TextTile
+
 ### 0.0.4
 
 * Removed pipeline through js-browserify-minify.
