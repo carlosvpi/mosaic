@@ -3,7 +3,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/ts-src",
+    "/js-src",
+    "/browser"
   ],
   "version": "0.0.1",
   "description": "MVC for the front end",
