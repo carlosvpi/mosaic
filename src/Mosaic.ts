@@ -23,7 +23,7 @@ export const Mosaic = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 		accLength++
 
 		while (str.length) {
-			const match1 = str.match(/^\s*([a-zA-Z\-_]+)\s*/)
+			const match1 = str.match(/^\s*([a-zA-Z\-_0-9]+)\s*/)
 			if (!match1) {
 				throw new Error(`Expected an attribute name, reading "${rawTagAttrs.join('')}"[${accLength}]`)
 			}
@@ -44,7 +44,9 @@ export const Mosaic = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 			}
 			str = str.slice(1)
 			accLength++
-			const match2 = str.match(/^\s*([a-zA-Z\-_0-9\'\"]+)\s*/)
+			let match2 = str.match(/^\s*([a-zA-Z\-_0-9]+)\s*/)
+			match2 ||= str.match(/^\s*[\']([a-zA-Z\-_0-9\s\"]*)[\']\s*/)
+			match2 ||= str.match(/^\s*[\"]([a-zA-Z\-_0-9\s\']*)[\"]\s*/)
 			if (match2) {
 				accLength += match2[0].length
 				const [_2, value] = match2
