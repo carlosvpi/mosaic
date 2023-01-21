@@ -6,7 +6,7 @@ export const Mosaic = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 		tile = new Tile(tagAttrs)
 	} else {
 		const rawTagAttrs = tagAttrs.raw
-		const match0 = rawTagAttrs[0].match(/^\s*([a-zA-Z_][a-zA-Z\-_0-9]+)\s*/)
+		const match0 = rawTagAttrs[0].match(/^\s*([a-zA-Z_][a-zA-Z\-_0-9]*)\s*/)
 		if (!match0) {
 			throw new Error(`Expected a tag name, reading "${rawTagAttrs.join('')}"[${0}]`)
 		}

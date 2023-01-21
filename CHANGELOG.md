@@ -1,3 +1,7 @@
+### 0.0.6
+
+* Fix regular expression for attribute names
+
 ### 0.0.5
 
 * Export TextTile
