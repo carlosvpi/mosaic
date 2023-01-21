@@ -7,6 +7,12 @@
     "/js-src",
     "/browser"
   ],
+  "scripts": {
+    "js:build": "tsc",
+    "browser:build": "yarn browserify js-src/index.js > browser/mosaic.js && sed -i '' '1,2d;$d' browser/mosaic.js",
+    "browser:min": "yarn minify browser/mosaic.js > browser/mosaic.min.js",
+    "browser:clean": "sed -i '' '1,2d;$d' browser/mosaic.min.js"
+  },
   "version": "0.0.2",
   "description": "MVC for the front end",
   "repository": "https://github.com/carlosvpi/mosaic.git",
