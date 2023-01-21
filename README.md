@@ -167,3 +167,60 @@ In order to build a page, we just pass to the bodyConstructor function the child
 ```javascript
 bodyConstructor(inputTile, spanTile)
 ```
+
+# How to compile
+
+@carlosvpi/mosaic is provided as a ts module. In order to use it in the browser you will have some ts file `src/index.ts` importing it like so
+
+```javascript
+import { Mosaic } from `@carlosvpi/mosaic`
+
+Mosaic(document.body)(Mosaic`h1`('Hello, world'))
+```
+
+Follow these steps:
+
+1. Compile it
+
+Run
+
+```
+tsc
+```
+
+You will need a tsconfig.json file roughly like this one
+
+```
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "lib": ["es6", "dom", "es2017"],
+    "declaration": true,
+    "outDir": "./js-src"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
+```
+
+2. Browserify it
+
+Run
+
+```
+browserify js-src/index.js > dist/index.js
+```
+
+You will need to have browserify installed globally. Alternatively, install it in your devDependencies and use `yarn browserify` instead of `browserify` (in that case, you will need to remove the first 2 and last lines of the resulting file with `sed -i '' '1,2d;$d' dist/index.js`).
+
+3. Minify it
+
+Run
+
+```
+minify dist/index.js > dist/index.min.js
+```
+
+You will need to have minify installed globally. Alternatively, install it in your devDependencies and use `yarn minify` instead of `browserify` (in that case, you will need to remove the first 2 and last lines of the resulting file with `sed -i '' '1,2d;$d' dist/index.min.js`).

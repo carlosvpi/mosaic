@@ -4,9 +4,9 @@
     "target": "es2015",
     "lib": ["es6", "dom", "es2017"],
     "declaration": true,
-    "outDir": "./js-src"
+    "outDir": "./dist"
   },
   "include": [
-    "ts-src/**/*"
+    "src/**/*"
   ]
 }
