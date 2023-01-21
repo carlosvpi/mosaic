@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es2015",
     "lib": ["es6", "dom", "es2017"],
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./js-src"
   },
   "include": [
-    "src/**/*"
+    "ts-src/**/*"
   ]
 }

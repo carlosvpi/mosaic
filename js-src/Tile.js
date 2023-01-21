@@ -1,19 +1,9 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-exports.__esModule = true;
-exports.Tile = exports.svgElements = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TextTile = exports.Tile = exports.svgElements = void 0;
 exports.svgElements = ['animate', 'animatecolor', 'animatemotion', 'animatetransform', 'set', 'circle', 'ellipse', 'image', 'line', 'path', 'polygon', 'polyline', 'rect', 'text', 'defs', 'glyph', 'g', 'marker', 'mask', 'missing-glyph', 'pattern', 'switch', 'symbol', 'desc', 'filter', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feFuncR', 'feFuncG', 'feFuncB', 'feFuncA', 'feComposite', 'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feFlood', 'feGaussianBlur', 'feImage', 'feMerge', 'feMergeNode', 'feMorphology', 'feOffset', 'feSpecularLighting', 'feTile', 'feTurbulence', 'feDistantLight', 'fePointLight', 'feSpotlight', 'linearGradient', 'radialGradient', 'altGlyph', 'textPath', 'tref', 'tspan'];
-var Tile = /** @class */ (function () {
-    function Tile(tag, isText) {
-        if (isText === void 0) { isText = false; }
+class Tile {
+    constructor(tag, isText = false) {
         if (typeof tag !== 'string') {
             this.node = tag;
             return;
@@ -22,7 +12,9 @@ var Tile = /** @class */ (function () {
             : exports.svgElements.includes(tag) ? document.createElementNS('http://www.w3.org/2000/svg', tag)
                 : document.createElement(tag);
     }
-    Tile.prototype.attr = function (key, value) {
+    attr(key, value) {
+        if (this.node instanceof Text)
+            return this;
         if (value === undefined) {
             return this.node.getAttribute(key);
         }
@@ -33,101 +25,123 @@ var Tile = /** @class */ (function () {
             this.node.setAttribute(key, value);
         }
         return this;
-    };
-    Tile.prototype.attrs = function (keyValues) {
-        var _this = this;
+    }
+    attrs(keyValues) {
+        const node = this.node;
+        if (node instanceof Text)
+            return this;
         if (keyValues === undefined) {
-            return this.node.getAttributeNames().reduce(function (acc, key) {
-                acc[key] = _this.node.getAttribute(key);
+            return node.getAttributeNames().reduce((acc, key) => {
+                acc[key] = node.getAttribute(key);
                 return acc;
             }, {});
         }
-        Object.keys(keyValues).forEach(function (key) {
-            _this.attr(key, keyValues[key]);
+        Object.keys(keyValues).forEach(key => {
+            this.attr(key, keyValues[key]);
         });
         return this;
-    };
-    Tile.prototype.text = function (text) {
-        this.node.appendChild(document.createTextNode(text));
+    }
+    text(text) {
+        if (text === undefined)
+            return this.node.textContent;
+        if (this.node instanceof Text) {
+            this.node.textContent = text;
+        }
+        else {
+            this.node.appendChild(document.createTextNode(text));
+        }
         return this;
-    };
-    Tile.prototype.on = function (eventName, action, useCapture) {
+    }
+    on(eventName, action, useCapture = false) {
         this.node.addEventListener(eventName, action.bind(this.node), useCapture);
         return this;
-    };
-    Tile.prototype.tap = function (f) {
+    }
+    tap(f) {
         f(this);
         return this;
-    };
-    Tile.prototype.classed = function (klass, isClassed) {
+    }
+    classed(klass, isClassed) {
+        if (this.node instanceof Text)
+            return this;
         if (klass === undefined) {
-            return __spreadArray([], this.classList, true);
+            return Array.prototype.slice.call(this.node.classList);
         }
-        if (isClassed === undefined) {
+        if (isClassed === undefined && typeof klass === 'string') {
             return this.node.classList.contains(klass);
+        }
+        if (typeof klass === 'object') {
+            Object.keys(klass).forEach(_klass => {
+                this.classed(_klass, klass[_klass]);
+            });
+            return this;
+        }
+        if (typeof isClassed === 'function') {
+            isClassed(_isClassed => this.classed(klass, _isClassed));
+            return this;
         }
         this.node.classList[isClassed ? 'add' : 'remove'](klass);
         return this;
-    };
-    Tile.prototype.append = function (tag) {
-        var tile = tag instanceof Tile ? tag : new Tile(tag);
+    }
+    append(tag) {
+        const tile = tag instanceof Tile ? tag : new Tile(tag);
         if (this.node.childNodes[this.node.childNodes.length - 1] !== tile.node) {
             this.node.appendChild(tile.node);
         }
         return tile;
-    };
-    Tile.prototype.children = function (children) {
-        var _this = this;
-        if (children === void 0) { children = []; }
-        var a = __spreadArray([], this.node.childNodes, true);
-        var b = children.map(function (tile) { return tile.node; });
+    }
+    children(children = []) {
+        const node = this.node;
+        if (node instanceof Text)
+            return this;
+        let a = Array.prototype.slice.call(node.childNodes);
+        const b = children.map(tile => tile.node);
         if (a.length + b.length === 0)
             return this;
-        a.filter(function (element) { return !b.includes(element); }).forEach(function (element) { return _this.node.removeChild(element); });
-        a = __spreadArray([], this.node.childNodes, true);
-        var b_i = b.length - 1;
-        var b_c;
+        a.filter(element => !b.includes(element)).forEach(element => node.removeChild(element));
+        a = Array.prototype.slice.call(node.childNodes);
+        let b_i = b.length - 1;
+        let b_c;
         while (!a.includes(b[b_i]) && b_i >= 0) {
             b_i--;
         }
         b_c = b_i;
         while (b_i++ < b.length - 1) {
-            this.node.appendChild(b[b_i]);
+            node.appendChild(b[b_i]);
         }
-        for (var b_i_1 = b_c - 1; b_i_1 >= 0; b_i_1--) {
-            if (!a.includes(b[b_i_1])) {
-                this.node.insertBefore(b[b_i_1], b[b_i_1 + 1]);
+        for (let b_i = b_c - 1; b_i >= 0; b_i--) {
+            if (!a.includes(b[b_i])) {
+                node.insertBefore(b[b_i], b[b_i + 1]);
                 continue;
             }
-            if (a.indexOf(b[b_i_1]) !== a.indexOf(b[b_c]) - 1) {
-                this.node.insertBefore(b[b_i_1], b[b_i_1 + 1]);
+            if (a.indexOf(b[b_i]) !== a.indexOf(b[b_c]) - 1) {
+                node.insertBefore(b[b_i], b[b_i + 1]);
             }
-            b_c = b_i_1;
+            b_c = b_i;
         }
         return this;
-    };
-    Tile.prototype.adopt = function (child) {
+    }
+    adopt(child) {
         this.append(child);
         return this;
-    };
-    Tile.prototype.moveToBottom = function () {
-        this.node.parentElement.insertBefore(this.node, this.node.parentElement.chidlren[0]);
+    }
+    moveToBottom() {
+        this.node.parentElement.insertBefore(this.node, this.node.parentElement.children[0]);
         return this;
-    };
-    Tile.prototype.moveBelow = function (sibling) {
-        var siblingNode = !sibling
+    }
+    moveBelow(sibling) {
+        const siblingNode = !sibling
             ? this.node.parentElement.previousElementSibling
             : sibling.node;
         this.node.parentElement.insertBefore(this.node, siblingNode);
         return this;
-    };
-    Tile.prototype.moveToTop = function () {
+    }
+    moveToTop() {
         this.node.parentElement.appendChild(this.node);
         return this;
-    };
-    Tile.prototype.moveAbove = function (sibling) {
+    }
+    moveAbove(sibling) {
         var _a;
-        var siblingNode = !sibling
+        const siblingNode = !sibling
             ? (_a = this.node.nextElementSibling) === null || _a === void 0 ? void 0 : _a.nextElementSibling
             : sibling.node.nextElementSibling;
         if (!siblingNode) {
@@ -137,11 +151,11 @@ var Tile = /** @class */ (function () {
             this.node.parentElement.insertBefore(this.node, siblingNode);
         }
         return this;
-    };
-    Tile.prototype.remove = function () {
+    }
+    remove() {
         this.node.parentElement.removeChild(this.node);
-    };
-    return Tile;
-}());
+    }
+}
 exports.Tile = Tile;
-Tile.text = function (text) { return new Tile(text, true); };
+const TextTile = text => new Tile(text, true);
+exports.TextTile = TextTile;

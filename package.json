@@ -10,5 +10,12 @@
   "repository": "https://github.com/carlosvpi/mosaic.git",
   "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babelify": "8",
+    "browserify": "^17.0.0",
+    "minify": "^9.2.0",
+    "terser": "^5.16.1"
+  }
 }
