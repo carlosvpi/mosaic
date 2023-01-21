@@ -5,7 +5,7 @@
   "files": [
     "/dist"
   ],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "MVC for the front end",
   "repository": "https://github.com/carlosvpi/mosaic.git",
   "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
