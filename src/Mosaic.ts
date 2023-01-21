@@ -1,6 +1,7 @@
 import { Tile, Node } from './Tile'
 
-export const Mosaic = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
+// @ts-ignore
+module.exports = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 	let tile: Tile
 	if (tagAttrs instanceof Node) {
 		tile = new Tile(tagAttrs)

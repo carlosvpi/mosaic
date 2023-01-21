@@ -1,3 +1,7 @@
+### 0.0.9
+
+* export Mosaic as a default
+
 ### 0.0.8
 
 * Added "build" pipeline and dist/mosaic.min.js

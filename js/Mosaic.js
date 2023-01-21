@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Mosaic = void 0;
 const Tile_1 = require("./Tile");
-const Mosaic = (tagAttrs, ...objects) => {
+// @ts-ignore
+module.exports = (tagAttrs, ...objects) => {
     let tile;
     if (tagAttrs instanceof Node) {
         tile = new Tile_1.Tile(tagAttrs);
@@ -97,4 +97,3 @@ const Mosaic = (tagAttrs, ...objects) => {
         return tile.children(children);
     };
 };
-exports.Mosaic = Mosaic;
