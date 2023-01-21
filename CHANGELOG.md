@@ -1,3 +1,8 @@
+### 0.0.4
+
+* Removed pipeline through js-browserify-minify.
+* Fixed type TemplateStringsArray for Mosaic (Mosaic`input` failed).
+
 ### 0.0.3
 
 * Removed error lines from browser/mosaic.js and browser/mosaic.min.js
