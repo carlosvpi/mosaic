@@ -1,3 +1,7 @@
+### 0.0.8
+
+* Added "build" pipeline and dist/mosaic.min.js
+
 ### 0.0.7
 
 * Fix regular expression for attribute value

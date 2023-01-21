@@ -1,2 +1,2 @@
 export { Tile, TextTile } from './Tile'
-export { Mosaic } from './Mosaic'
+export { Mosaic as default } from './Mosaic'
