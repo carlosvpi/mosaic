@@ -88,7 +88,9 @@ module.exports = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 	}
 	return (...children) => {
 		if (typeof children[0] === 'function') {
-			children[0](list => tile.children(list))
+			let ch, rch
+			children[0](list => {ch=list;tile.children(ch, rch)})
+			typeof children[1] === 'function' && children[1](list => {rch=list;tile.children(ch, rch)})
 			return tile
 		}
 		return tile.children(children)

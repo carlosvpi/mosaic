@@ -1,3 +1,8 @@
+### 0.0.10
+
+* New system for children coherence: tile.children() admits second param childrenToRemove
+* Added tile.onCancelExit, to cancel the exit of a child
+
 ### 0.0.9
 
 * export Mosaic as a default

@@ -96,6 +96,12 @@ const spanTile = spanConstructor('This text is in ', strongTile, '. And this one
 
 In the example above, a couple of elements are created and one is nested inside the other.
 
+Methods `tile.onEnter(enter)` and `tile.onExit(exit)` allow to provide `enter` and `exit` functions, to be run when the tile is appended into a parent, and when it is to be removed from the father. The `enter` function takes as a parameter `this` (the entering tile) and isn't expected to return anything. The `exit` function takes as a parameter `this` (the exiting tile) and is expected to return a promise such that the exiting tile will be removed upon its resolution.
+
+In order to make enter and exit animations on children, a second `childrenToRemove: Tile[]` parameter can be given to `tile.children()`. `childrenToRemove` is an array of children that belong to the first parameter, that should, for the time being, still be children of the tile, but that should be removed eventually (via a call to `tile._onExit`).
+
+The `tile.onCancelExit()` allows to provide a function to run when a tile's exit must be cancelled due to it having been re-added before it was completely removed.
+
 ### Assigning classes to a tile
 
 Like attributes, classes can be static or dynamic. Classes are assigned to tiles, not to tile constructors.
