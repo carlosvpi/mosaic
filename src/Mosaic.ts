@@ -89,8 +89,14 @@ module.exports = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 	return (...children) => {
 		if (typeof children[0] === 'function') {
 			let ch, rch
-			children[0](list => {ch=list;tile.children(ch, rch)})
-			typeof children[1] === 'function' && children[1](list => {rch=list;tile.children(ch, rch)})
+			children[0](list => {
+				ch = list;
+				tile.children(ch, ch.filter(c => !rch.includes(c)))
+			})
+			typeof children[1] === 'function' && children[1](list => {
+				rch = list;
+				tile.children(ch, ch.filter(c => !rch.includes(c)))
+			})
 			return tile
 		}
 		return tile.children(children)
