@@ -1,3 +1,7 @@
+### 0.0.11
+
+* Reverse `.children()` 2nd parameter logic (from childrenToRemove to childrenToKeep)
+
 ### 0.0.10
 
 * New system for children coherence: tile.children() admits second param childrenToRemove
