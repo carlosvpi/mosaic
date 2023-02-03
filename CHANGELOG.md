@@ -1,3 +1,7 @@
+### 0.0.12
+
+* TextTile to accept a TemplateStringsArray and react to its changes.
+
 ### 0.0.11
 
 * Reverse `.children()` 2nd parameter logic (from childrenToRemove to childrenToKeep)

@@ -1,7 +1,8 @@
-import { Tile, TextTile } from './Tile'
+import { TextTile } from './TextTile'
+import { NodeTile } from './NodeTile'
 // @ts-ignore
 module.exports = require('./Mosaic')
 // @ts-ignore
-module.exports.Tile = Tile
+module.exports.NodeTile = NodeTile
 // @ts-ignore
-module.exports.TextTile = TextTile
+module.exports.TextTile = (...args) => new TextTile(...args)

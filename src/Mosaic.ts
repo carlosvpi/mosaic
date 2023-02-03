@@ -1,10 +1,11 @@
-import { Tile, Node } from './Tile'
+import { Element } from './Tile'
+import { NodeTile } from './NodeTile'
 
 // @ts-ignore
-module.exports = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
-	let tile: Tile
-	if (tagAttrs instanceof Node) {
-		tile = new Tile(tagAttrs)
+module.exports = (tagAttrs: TemplateStringsArray | Element, ...objects) => {
+	let tile: NodeTile
+	if (tagAttrs instanceof Element) {
+		tile = new NodeTile(tagAttrs)
 	} else {
 		const rawTagAttrs = tagAttrs.raw
 		const match0 = rawTagAttrs[0].match(/^\s*([a-zA-Z_][a-zA-Z\-_0-9]*)\s*/)
@@ -15,7 +16,7 @@ module.exports = (tagAttrs: TemplateStringsArray | Node, ...objects) => {
 		let tagAttrsIndex = 0
 		const attrs = {}
 		const [_0, tag] = match0
-		tile = new Tile(tag)
+		tile = new NodeTile(tag)
 		let str = rawTagAttrs[0].slice(match0[0].length)
 		if (str.length && str[0] !== '[') {
 			throw new Error(`Expected "[", reading "${rawTagAttrs.join('')}"[${accLength}]`)
