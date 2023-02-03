@@ -1,8 +1,26 @@
 import { Element } from './Tile'
 import { NodeTile } from './NodeTile'
 
-// @ts-ignore
-module.exports = (tagAttrs: TemplateStringsArray | Element, ...objects) => {
+const Mosaic = (tagAttrs: TemplateStringsArray | Element, ...objects) => {
+	// if (tagAttrs instanceof Function) {
+	// 	const defaults = objects[0]
+	// 	return (...attrs) => (...children) => {
+	// 		tile = tagAttrs()
+	// 		if (typeof children[0] === 'function') {
+	// 			let ch, rch
+	// 			children[0](list => {
+	// 				ch = list;
+	// 				tile.children(ch, ch.filter(c => !rch.includes(c)))
+	// 			})
+	// 			typeof children[1] === 'function' && children[1](list => {
+	// 				rch = list;
+	// 				tile.children(ch, ch.filter(c => !rch.includes(c)))
+	// 			})
+	// 			return tile
+	// 		}
+	// 		return tile.children(children)
+	// 	}
+	// }
 	let tile: NodeTile
 	if (tagAttrs instanceof Element) {
 		tile = new NodeTile(tagAttrs)
@@ -103,3 +121,6 @@ module.exports = (tagAttrs: TemplateStringsArray | Element, ...objects) => {
 		return tile.children(children)
 	}
 }
+
+// @ts-ignore
+module.exports = Mosaic

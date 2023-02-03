@@ -1,3 +1,7 @@
+### 0.0.13
+
+* Added extra files
+
 ### 0.0.12
 
 * TextTile to accept a TemplateStringsArray and react to its changes.

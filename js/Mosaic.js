@@ -1,8 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const NodeTile_1 = require("./NodeTile");
-// @ts-ignore
-module.exports = (tagAttrs, ...objects) => {
+const Mosaic = (tagAttrs, ...objects) => {
+    // if (tagAttrs instanceof Function) {
+    // 	const defaults = objects[0]
+    // 	return (...attrs) => (...children) => {
+    // 		tile = tagAttrs()
+    // 		if (typeof children[0] === 'function') {
+    // 			let ch, rch
+    // 			children[0](list => {
+    // 				ch = list;
+    // 				tile.children(ch, ch.filter(c => !rch.includes(c)))
+    // 			})
+    // 			typeof children[1] === 'function' && children[1](list => {
+    // 				rch = list;
+    // 				tile.children(ch, ch.filter(c => !rch.includes(c)))
+    // 			})
+    // 			return tile
+    // 		}
+    // 		return tile.children(children)
+    // 	}
+    // }
     let tile;
     if (tagAttrs instanceof Element) {
         tile = new NodeTile_1.NodeTile(tagAttrs);
@@ -105,3 +123,5 @@ module.exports = (tagAttrs, ...objects) => {
         return tile.children(children);
     };
 };
+// @ts-ignore
+module.exports = Mosaic;
