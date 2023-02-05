@@ -27,22 +27,22 @@ Now through `bodyConstructor` you can add or remove elements to the body of your
 
 # Creating new tiles in your mosaic
 
-### The tile constructor
+### The NodeTile constructor
 
 ```javascript
-const tileConstructor = Mosaic`tag[attr1 = value1; attr2 = ${ value 2 }]`
+const nodeTileConstructor = Mosaic`tag[attr1 = value1; attr2 = ${ value 2 }]`
 ```
 
-A tile constructor created calling `Mosaic` with a string template. On creation, a new DOM element is created, and its attributes are set to those provided by the template.
+A NodeTile constructor created calling `Mosaic` with a string template. On creation, a new DOM element is created, and its attributes are set to those provided by the template.
 
 ```javascript
 // create a span constructor
 const spanConstructor = Mosaic`span[id=span-1]`
 ```
 
-### Providing attributes to a tile constructor
+### Providing attributes to a NodeTile constructor
 
-A tile constructor can be provided attributes that may be static (if provided at the time of creating the tile constructor) or dynamic (if, instead, a function is provided that will set the attribute at a different point in time, or points in time).
+A NodeTile constructor can be provided attributes that may be static (if provided at the time of creating the NodeTile constructor) or dynamic (if, instead, a function is provided that will set the attribute at a different point in time, or points in time).
 
 1. Static attribute
 
@@ -98,7 +98,7 @@ In the example above, a couple of elements are created and one is nested inside 
 
 Methods `tile.onEnter(enter)` and `tile.onExit(exit)` allow to provide `enter` and `exit` functions, to be run when the tile is appended into a parent, and when it is to be removed from the father. The `enter` function takes as a parameter `this` (the entering tile) and isn't expected to return anything. The `exit` function takes as a parameter `this` (the exiting tile) and is expected to return a promise such that the exiting tile will be removed upon its resolution.
 
-In order to make enter and exit animations on children, a second `childrenToRemove: Tile[]` parameter can be given to `tile.children()`. `childrenToRemove` is an array of children that belong to the first parameter, that should, for the time being, still be children of the tile, but that should be removed eventually (via a call to `tile._onExit`).
+When using a function to return the children, Mosaic expect this function to return an array of pairs `[child: Node, keep: boolean]`, where `keep` says whether the child has to be kept or removed. Then, children that are not to be kept are called `.onExit()`. The reason for this structure is to allow some components to unmount on their own terms through `tile.onExit()`, instead of being unmounted immediatelly, which is what would happen if we don't pass them to the `children()` method.
 
 The `tile.onCancelExit()` allows to provide a function to run when a tile's exit must be cancelled due to it having been re-added before it was completely removed.
 

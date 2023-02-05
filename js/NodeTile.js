@@ -84,10 +84,10 @@ class NodeTile extends Tile_1.Tile {
         }
         return tile;
     }
-    children(children = [], childrenToRemove = []) {
+    children(children = [], keepChild) {
         const node = this.node;
-        childrenToRemove.forEach(childToRemove => this._removingChildren.add(childToRemove));
-        children.filter(child => !childrenToRemove.includes(child)).forEach(child => {
+        children.filter(child => !keepChild(child)).forEach(childToRemove => this._removingChildren.add(childToRemove));
+        children.filter(child => keepChild(child)).forEach(child => {
             if (!this._removingChildren.has(child))
                 return;
             this._removingChildren.delete(child);
@@ -108,7 +108,7 @@ class NodeTile extends Tile_1.Tile {
         b_c = b_i;
         while (b_i++ < b.length - 1) {
             const ch = childrenByNode.get(b[b_i]);
-            if (childrenToRemove.includes(ch))
+            if (!keepChild(ch))
                 continue;
             node.appendChild(b[b_i]);
             ch._onEnter(ch);
@@ -116,7 +116,7 @@ class NodeTile extends Tile_1.Tile {
         for (let b_i = b_c - 1; b_i >= 0; b_i--) {
             if (!a.includes(b[b_i])) {
                 const ch = childrenByNode.get(b[b_i]);
-                if (childrenToRemove.includes(ch))
+                if (!keepChild(ch))
                     continue;
                 node.insertBefore(b[b_i], b[b_i + 1]);
                 ch._onEnter(ch);
@@ -127,7 +127,7 @@ class NodeTile extends Tile_1.Tile {
             }
             b_c = b_i;
         }
-        childrenToRemove.forEach((childToRemove) => __awaiter(this, void 0, void 0, function* () {
+        children.filter(child => !keepChild(child)).forEach((childToRemove) => __awaiter(this, void 0, void 0, function* () {
             if (!Array.from(this.node.childNodes).includes(childToRemove.node))
                 return;
             const onExit = childToRemove._onExit(childToRemove);

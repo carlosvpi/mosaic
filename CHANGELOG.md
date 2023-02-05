@@ -1,3 +1,7 @@
+### 0.0.14
+
+* New children() signature for NodeType: children([Node, boolean][])
+
 ### 0.0.13
 
 * Added extra files

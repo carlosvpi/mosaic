@@ -74,10 +74,10 @@ export class NodeTile extends Tile {
 		}
 		return tile
 	}
-	children (children: Tile[] = [], childrenToRemove: Tile[] = []) {
+	children (children: Tile[] = [], keepChild: (child: Tile) => boolean) {
 		const node = this.node
-		childrenToRemove.forEach(childToRemove => this._removingChildren.add(childToRemove))
-		children.filter(child => !childrenToRemove.includes(child)).forEach(child => {
+		children.filter(child => !keepChild(child)).forEach(childToRemove => this._removingChildren.add(childToRemove))
+		children.filter(child => keepChild(child)).forEach(child => {
 			if (!this._removingChildren.has(child)) return
 			this._removingChildren.delete(child)
 			child._onCancelExit(this)
@@ -96,7 +96,7 @@ export class NodeTile extends Tile {
 		b_c = b_i
 		while (b_i++ < b.length - 1) {
 			const ch = childrenByNode.get(b[b_i])
-			if (childrenToRemove.includes(ch)) continue
+			if (!keepChild(ch)) continue
 			node.appendChild(b[b_i])
 			ch._onEnter(ch)
 		}
@@ -104,7 +104,7 @@ export class NodeTile extends Tile {
 		for (let b_i = b_c - 1; b_i >= 0; b_i--) {
 			if (!a.includes(b[b_i])) {
 				const ch = childrenByNode.get(b[b_i])
-				if (childrenToRemove.includes(ch)) continue
+				if (!keepChild(ch)) continue
 				node.insertBefore(b[b_i], b[b_i + 1])
 				ch._onEnter(ch)
 				continue
@@ -115,7 +115,7 @@ export class NodeTile extends Tile {
 
 			b_c = b_i
 		}
-		childrenToRemove.forEach(async (childToRemove) => {
+		children.filter(child => !keepChild(child)).forEach(async (childToRemove) => {
 			if (!Array.from(this.node.childNodes).includes(childToRemove.node)) return
 			const onExit = childToRemove._onExit(childToRemove)
 			if (!(onExit instanceof Promise)) throw new Error('onExit must return a promise')

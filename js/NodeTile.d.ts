@@ -11,6 +11,6 @@ export declare class NodeTile extends Tile {
         [Identifier: string]: boolean | ((a: (k: boolean) => any) => any);
     } | undefined, isClassed: boolean | ((a: (k: boolean) => any) => any) | undefined): any;
     append(tag: Tag): Tile;
-    children(children?: Tile[], childrenToRemove?: Tile[]): this;
+    children(children: Tile[], keepChild: (child: Tile) => boolean): this;
     adopt(child: Tag): this;
 }
